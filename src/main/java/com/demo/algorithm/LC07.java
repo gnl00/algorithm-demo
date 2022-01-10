@@ -11,9 +11,46 @@ package com.demo.algorithm;
 
 public class LC07 {
     public static void main(String[] args) {
-        System.out.println(reverse(-2147483648));
+        System.out.println(reverse2(-1 * Integer.MAX_VALUE));
     }
 
+    // O(n) 利用求余进行整数反转
+    public static int reverse2(int x) {
+
+        System.out.println(x);
+
+        if (x > Integer.MAX_VALUE || x < Integer.MAX_VALUE * -1) {
+            return 0;
+        }
+
+        boolean negative = x < 0 ? true : false;
+
+        if (negative) {
+            x *= -1;
+        }
+
+        int n = 0;
+        while (x > 0) {
+            // 将上一次的记录保存
+            int tmp = n;
+            n = n * 10 + x % 10;
+
+            // 将最新结果还原后如果和上一次保存的记录不相等，证明存在溢出
+            if ((n - x % 10) / 10 != tmp) {
+                return 0;
+            }
+
+            x /= 10;
+        }
+
+        if (negative) {
+            n *= -1;
+        }
+
+        return n;
+    }
+
+    // 转字符串，O(n^2)
     public static int reverse(int x) {
 
         StringBuilder numStr = new StringBuilder(x + "");

@@ -85,7 +85,7 @@ public class LC06 {
         return ret.toString();
     }
 
-    // 暴力遍历，存到数组 O(n^2)
+    // 暴力遍历，存到二维数组 O(n^2)
     public static String convert(String s, int numRows) {
         // PINALSIGYAHRPI
         // 想法1 奇数次开始隔 numRows 个，偶数次开始隔 numRows 个 行不通
