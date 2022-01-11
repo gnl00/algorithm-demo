@@ -13,6 +13,7 @@ public class LC09 {
         System.out.println(isPalindrome(121));
     }
 
+    // O(n)
     public static boolean isPalindrome(int x) {
 
         if (x < 0) return false;

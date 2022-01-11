@@ -50,51 +50,114 @@ public class LC10DP {
     public static void main(String[] args) {
 
         String s = "aab";
-        String p = "c*a*b";
+        String p = "aaa.*";
 
         System.out.println(isMatch(s, p));
 
-        System.out.println(s.matches("c*a*b"));
+        System.out.println(s.matches(p));
 
     }
 
+    // 双指针题解
+    public static boolean isMatch2(String s, String p) {
+
+        // 如果不存在*号，可以直接使用以下的方式进行匹配
+        int i = 0, j = 0;
+        while (i < s.length() && j < p.length()) {
+            if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.') {
+                i++;
+                j++;
+            } else {
+                return false;
+            }
+        }
+
+        // 如果加入*号
+
+
+        // 从后向前匹配
+        i = s.length() - 1;
+        j = p.length() - 1;
+        while (i >= 0 && j >= 0) {
+
+        }
+
+        return false;
+    }
+
+    // 动态规划题解
     public static boolean isMatch(String s, String p) {
 
-        int m = s.length();
-        int n = p.length();
+        if (null == s || null == p) {
+            return false;
+        }
 
-        // 用 f[i][j] 表示 s 的前 i 个字符与 p 中的前 j 个字符是否能够匹配
-        boolean [][] f = new boolean[m + 1][n + 1];
-        // 显然 s 中的第 0 个字符和 p 中的第 0 个字符是相匹配的
-        f[0][0] = true;
+        int sLen = s.length();
+        int pLen = p.length();
 
-        for (int i = 0; i <= m ; ++i) {
-            for (int j = 1; j <= n ; ++j) {
+        // 一、定义dp数组以及下标含义
+        // dp[i][j] 表示 s 的前 i 个字符与 p 中的前 j 个字符是否能够匹配
+        boolean[][] dp = new boolean[sLen+1][pLen+1];
+
+        // 二、确定dp数组推导公式
+        // 很容易知道dp[i][j]的需要根据dp[i-1][j-1]得出，若是dp[i][j]前面出现false的情况，那两个字符串显然是不匹配的
+        // 已知 dp[i-1][j-1] = true 意思就是前面的字符都匹配了，当前 dp[i][j] 的情况未知
+
+        // 此时需要分情况讨论s.charAt(i) 和 p.charAt(j)：
+        // 1、s.charAt(i) == p.charAt(j) 时，dp[i][j] = dp[i-1][j-1]
+
+        // 2、考虑p.charAt(j)：
+        // 2.1、p.charAt(j) == '.'时，dp[i][j] = dp[i-1][j-1]
+        // 2.2、p.charAt(j) == '*' 时：
+        // 首先知道 * 可以匹配 0 个或任意多个字符，但是只有 * 前面的字符都匹配上了，才轮到 * 匹配。
+        // 所以要考虑 * 前面的元素 p.charAt(j-1) 是否匹配，如果 * 前面的字符不匹配，那 * 也就无须匹配了
+        // 根据 s.charAt(i) 和 p.charAt(j-1) 是否相等可以分为以下情况：
+        // 2.2.1、可以匹配：s.charAt(i) == p.charAt(j-1) 或者 p.charAt(j-1) == ‘.’
+        // 2.2.2 匹配不上：s.charAt(i) != p.charAt(j-1)
+
+        // 3、怎么判断*前面的字符匹配
+        // dp[i][j] = dp[i-1][j] 前多个字符匹配的情况
+        // dp[i][j] = dp[i][j-1] 前一个字符匹配的情况
+        // dp[i][j] = dp[i][j-2] 前面没有匹配的情况
+        // 比如 s = aac p = aac*
+        // dp[i-1][j] 表示s串的前i个字符和p串中j位置的字符都匹配，比如
+        // dp[i][j-1] 表示s串的第i个字符和去掉*号后的p串是否匹配，比如 s = aab 和 p = aab*
+        // dp[i][j-2] 表示p去掉*号以及*号前面的字符后，s和p是否还能进行匹配，比如 s = aab 和 p = aabb* 即使去掉b*，前面的aab还是可以匹配的
+
+        // 三、初始化dp数组
+        // s为空，p为空，能匹配上
+        dp[0][0] = true;
+
+        // 四、确定遍历顺序
+
+        // 五、推导dp数组
+        for (int i = 0; i <= sLen ; i++) {
+            for (int j = 1; j <= pLen ; j++) { // p不能为空串，所以下标从1开始
+                // p的第j个字符为 *
                 if (p.charAt(j - 1) == '*') {
-                    f[i][j] = f[i][j - 2];
-                    if (matches(s, p, i, j - 1)) {
-                        f[i][j] = f[i][j] || f[i - 1][j];
+                    // 是*号，分情况讨论
+                    // 判断*号前面的字符是否匹配
+
+                    // *前面的字符不匹配
+                    dp[i][j] = dp[i][j-2];
+
+                    if (i != 0 && ( s.charAt(i-1) == p.charAt(j-2) || p.charAt(j-2) == '.') ) {
+                        // *前面的字符匹配
+                        dp[i][j] = dp[i-1][j];
                     }
                 } else {
-                    if (matches(s, p, i, j)) {
-                        f[i][j] = f[i - 1][j - 1];
+                    // 非*号可能的情况为:
+                    // 匹配： s.charAt(i) == p.charAt(j)，不匹配： s.charAt(i) != p.charAt(j)
+                    // 匹配的情况又分为:
+                    // s.charAt(i) == p.charAt(j) || p.charAt(j) == '.'
+                    if ( i != 0 && ( s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.') ) {
+                        dp[i][j] = dp[i - 1][j - 1];
                     }
                 }
             }
         }
 
-        return f[m][n];
+        return dp[sLen][pLen];
     }
 
-    public static boolean matches(String s, String p, int i, int j) {
-        if (i == 0) {
-            return false;
-        }
-
-        if (p.charAt(j - 1) == '.') {
-            return true;
-        }
-
-        return s.charAt(i - 1) == p.charAt(j - 1);
-    }
 }
