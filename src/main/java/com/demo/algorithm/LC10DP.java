@@ -58,33 +58,6 @@ public class LC10DP {
 
     }
 
-    // 双指针题解
-    public static boolean isMatch2(String s, String p) {
-
-        // 如果不存在*号，可以直接使用以下的方式进行匹配
-        int i = 0, j = 0;
-        while (i < s.length() && j < p.length()) {
-            if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.') {
-                i++;
-                j++;
-            } else {
-                return false;
-            }
-        }
-
-        // 如果加入*号
-
-
-        // 从后向前匹配
-        i = s.length() - 1;
-        j = p.length() - 1;
-        while (i >= 0 && j >= 0) {
-
-        }
-
-        return false;
-    }
-
     // 动态规划题解
     public static boolean isMatch(String s, String p) {
 

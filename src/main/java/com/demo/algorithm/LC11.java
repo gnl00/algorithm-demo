@@ -29,6 +29,37 @@ public class LC11 {
         // [2,3,4,5,18,17,6]
         int[] height = { 2,3,4,5,18,17,6 };
         System.out.println(maxArea1(height));
+        System.out.println(maxArea2(height));
+    }
+
+    // 双指针题解
+    public static int maxArea2(int[] height) {
+
+        // Any ideas ?
+        // No
+        // 双指针大多都是对两层循环的优化, 所以当暴力法涉及到两层循环遍历的时候, 我们就应该有这种思想: 能不能用到双指针来解题
+
+        // 其次就是双指针移动的条件
+        // 当左右指针分别指向数组的左右两端, 容纳的水量 = 两个指针指向的数字中较小值 ∗ 指针之间的距离
+        // 接下来我们就只要考虑移动双指针后两者的变化情况即可
+        // 1、如果移动数字较大的那个指针，那么盛水容器的高就会变小，同时边长变短
+        // 2、如果移动数字较小的那个指针，那么容器的高不一定变小，因为下一个高可能比当前较小的高要大，也许可以弥补变短的长
+
+        if (height.length == 0) {
+            return 0;
+        }
+
+        int maxArea = 0;
+
+        for (int i = 0, j = height.length - 1; i < j; ) {
+
+            int currentLen = j - i;
+            int currentHeight = height[i] < height[j] ? height[i++] : height[j--];
+            maxArea = maxArea < currentLen * currentHeight ? currentLen * currentHeight : maxArea;
+
+        }
+
+        return maxArea;
     }
 
     // 双指针 O(n)
