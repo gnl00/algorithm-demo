@@ -70,6 +70,16 @@ public class LC15 {
                     list.add(nums[right]);
                     retList.add(list);
 
+                    // 左边跳过重复情况
+                    while(left < right && nums[left+1] == nums[left]) {
+                        left++;
+                    }
+
+                    // 右边跳过重复情况
+                    while (left < right && nums[right-1] == nums[right]) {
+                        right--;
+                    }
+
                     left++;
                     right--;
                 } else if (sum < 0){
