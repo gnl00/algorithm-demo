@@ -1,11 +1,9 @@
 package com.demo.algorithm;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
+ * 最接近的三数之和
  * 给你一个长度为 n 的整数数组nums和 一个目标值target。请你从 nums 中选出三个整数，使它们的和与target最接近。
  * 返回这三个数的和。
  * 假定每组输入只存在恰好一个解。
@@ -28,25 +26,94 @@ import java.util.Map;
 
 public class LC16 {
     public static void main(String[] args) {
-        int[] nums = {0,0,0};
-        int target = 1;
-        System.out.println(threeSumClosest(nums, target));
+        // -1 -1 1 1 3
+        int[] nums = {1,1,-1,-1,3};
+        int target = -1;
+        System.out.println(threeSumClosest2(nums, target));
     }
 
-    public static int threeSumClosest(int[] nums, int target) {
-
+    // 双指针题解 O(N^2)
+    public static int threeSumClosest2(int[] nums, int target) {
         int len = nums.length;
-
         if (len < 3 ) {
             return 0;
         }
 
-        // 1、定义dp数组，并确定数组下标含义
-        // dp[i]表述nums[i]和target相差的商
-        // 遍历nums数组，将相差的商保存到dp数组中
-        // 之后对dp数组进行排序，前三个元素之和即为所求
+        // 先对数组进行排序，之后进行遍历，求不同三个元素和target之间的差，最小的差即为所求
 
+        Arrays.sort(nums);
 
-        return 0;
+        int sum = nums[0] + nums[1] + nums[2];
+
+        for (int i = 0; i < len; i++) {
+
+            // 保证和上一次枚举的元素不相等
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            int left = i + 1, right = len - 1;
+            while (left < right) {
+
+                int currentSum = nums[i] + nums[left] + nums[right];
+
+                // 如果三数之和等于target，直接返回
+                if (currentSum == target) {
+                    return currentSum;
+                }
+
+                // 根据插值绝对值判断
+                if (Math.abs(currentSum - target) < Math.abs(sum - target)) {
+                    sum = currentSum;
+                }
+
+                if (currentSum > target) { // 如果大于target，将后面的指针向前移动
+                    int R = right - 1;
+                    // 移动到下一个不相等的元素
+                    while (R > left && nums[R] == nums[right]) {
+                        R--;
+                    }
+                    right = R;
+                } else if(currentSum < target) { // 如果小于target，前面的指针向后移动
+                    int L = left + 1;
+                    // 移动到下一个不相等的元素
+                    while (L < right && nums[L] == nums[left]) {
+                        L++;
+                    }
+                    left = L;
+                }
+            }
+
+        }
+        return sum;
+    }
+
+    // 暴力 O(n^3)
+    public static int threeSumClosest(int[] nums, int target) {
+        int len = nums.length;
+        if (len < 3 ) {
+            return 0;
+        }
+
+        // 先对数组进行排序，之后进行遍历，求不同三个元素和target之间的差，最小的差即为所求
+
+        Arrays.sort(nums);
+
+        int sum = nums[0] + nums[1] + nums[2];
+
+        for (int i = 0; i < len; i++) {
+            int a = nums[i];
+            for (int j = i + 1; j < len; j++) {
+                int b = nums[j];
+                for (int k = j + 1; k < len; k++) {
+                    int c = nums[k];
+
+                    int currentSum = a + b + c;
+                    sum = Math.abs(sum - target) > Math.abs(currentSum - target) ? currentSum : sum;
+
+                }
+            }
+        }
+        return sum;
     }
 }
