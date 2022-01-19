@@ -35,45 +35,47 @@ public class LC18 {
     public static void main(String[] args) {
         LC18 lc18 = new LC18();
         // -4 -1 -1 0 1 2
-        int [] nums = {-1,0,1,2,-1,-4};
-        int target = -1;
+        int [] nums = {0,0,0,1000000000,1000000000,1000000000,1000000000};
+        int target = 1000000000;
         System.out.println(lc18.fourSum2(nums, target));
     }
 
     public List<List<Integer>> fourSum2(int[] nums, int target) {
-
         if (nums.length < 4 || nums == null) {
             return retVal;
         }
 
         Arrays.sort(nums);
-
         int len = nums.length;
-
         for (int i = 0; i < len - 3; i++) {
             // 跳过重复元素
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
             }
 
-            if ((long) (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3]) > target) {
+            // 前四个元素和大于target，直接break
+            if (((long)nums[i] + (long)nums[i + 1] + (long)nums[i + 2] + (long)nums[i + 3]) > target) {
                 break;
             }
 
-            if ((long) (nums[i] + nums[len - 3] + nums[len - 2] + nums[len - 1]) < target) {
+            // 第一个和最后三个元素和小于target，移动第一个指针
+            if (((long)nums[i] + (long)nums[len - 3] + (long)nums[len - 2] + (long)nums[len - 1]) < target) {
                 continue;
             }
 
             for (int j = i + 1; j < len - 2; j++) {
+                // 跳过重复元素
                 if (j > i + 1 && nums[j] == nums[j-1]) {
                     continue;
                 }
 
-                if ((long) (nums[j] + nums[i] + nums[j + 1] + nums[j + 2]) > target) {
+                // 前四个元素和大于target，直接break
+                if (((long)nums[j] + (long)nums[i] + (long)nums[j + 1] + (long)nums[j + 2]) > target) {
                     break;
                 }
 
-                if ((long) (nums[j] + nums[i] + nums[len - 2] + nums[len - 1]) < target) {
+                // 第一个和最后三个元素和小于target，移动第一个指针
+                if (((long)nums[j] + (long)nums[i] + (long)nums[len - 2] + (long)nums[len - 1]) < target) {
                     continue;
                 }
 
@@ -81,11 +83,7 @@ public class LC18 {
                 while (left < right) {
                     int sum = nums[i] + nums[j] + nums[left] + nums[right];
                     if (sum == target) {
-                        val.add(i);
-                        val.add(j);
-                        val.add(left);
-                        val.add(right);
-                        retVal.add(val);
+                        retVal.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
 
                         while (left < right && nums[left] == nums[left + 1]) {
                             left++;
@@ -99,8 +97,8 @@ public class LC18 {
 
                     } else if (sum < target) {
                         left++;
-                    } else if (sum > target) {
-                        right++;
+                    } else {
+                        right--;
                     }
                 }
             }

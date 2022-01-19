@@ -1,6 +1,5 @@
 package com.demo.algorithm;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +22,10 @@ import java.util.List;
  * @since 2022/1/18 15:51
  */
 
-public class LC216 {
+public class LC216BT {
     public static void main(String[] args) {
-        LC216 lc216 = new LC216();
-        System.out.println(lc216.combinationSum3(3, 7));
+        LC216BT lc216BT = new LC216BT();
+        System.out.println(lc216BT.combinationSum3(3, 7));
     }
 
     // 详情见第77题

@@ -1,7 +1,6 @@
 package com.demo.algorithm;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,11 +26,11 @@ import java.util.List;
  * @since 2022/1/18 13:51
  */
 
-public class LC17 {
+public class LC17BT {
     public static void main(String[] args) {
-        LC17 lc17 = new LC17();
+        LC17BT lc17BT = new LC17BT();
         String digits = "22";
-        System.out.println(lc17.letterCombinations(digits));
+        System.out.println(lc17BT.letterCombinations(digits));
     }
 
     /**

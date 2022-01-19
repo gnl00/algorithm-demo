@@ -1,7 +1,6 @@
 package com.demo.algorithm;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,10 +30,10 @@ import java.util.List;
  * @since 2022/1/18 14:52
  */
 
-public class LC77 {
+public class LC77BT {
     public static void main(String[] args) {
-        LC77 lc77 = new LC77();
-        System.out.println(lc77.combine(4, 2));
+        LC77BT lc77BT = new LC77BT();
+        System.out.println(lc77BT.combine(4, 2));
     }
 
     /**
