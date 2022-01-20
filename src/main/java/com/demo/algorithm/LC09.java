@@ -16,9 +16,13 @@ public class LC09 {
     // O(n)
     public static boolean isPalindrome(int x) {
 
-        if (x < 0) return false;
+        if (x < 0) {
+            return false;
+        }
 
-        if(x >= 0 && x < 10) return true;
+        if(x >= 0 && x < 10) {
+            return true;
+        }
 
         long n = 0;
         int tmp = x;

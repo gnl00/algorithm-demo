@@ -1,6 +1,5 @@
 package com.demo.algorithm;
 
-
 /**
  * 有一棵特殊的苹果树，一连 n 天，每天都可以长出若干个苹果。
  * 在第 i 天，树上会长出 apples[i] 个苹果，这些苹果将会在 days[i] 天后（也就是说，第 i + days[i] 天时）腐烂，变得无法食用。

@@ -19,7 +19,7 @@ package com.demo.algorithm;
  * @since 2022/1/4 13:36
  */
 
-public class LC02 {
+public class LC02LinkedList {
     public static void main(String[] args) {
         ListNode l1 = new ListNode(1);
          ListNode l12 = new ListNode(8);

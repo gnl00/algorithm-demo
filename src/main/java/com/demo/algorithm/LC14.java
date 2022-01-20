@@ -1,12 +1,7 @@
 package com.demo.algorithm;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * 最长公共前缀
- *
  * 编写一个函数来查找字符串数组中的最长公共前缀。
  * 如果不存在公共前缀，返回空字符串""。
  *
