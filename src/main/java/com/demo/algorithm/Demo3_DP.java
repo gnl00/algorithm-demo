@@ -7,7 +7,7 @@ package com.demo.algorithm;
  * @since 2022/1/10 10:47
  */
 
-public class Demo3DP {
+public class Demo3_DP {
     public static void main(String[] args) {
         System.out.println(fib(9));
         System.out.println(fib2(9));

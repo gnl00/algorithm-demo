@@ -10,7 +10,7 @@ package com.demo.algorithm;
  * @since 2022/1/10 13:43
  */
 
-public class Demo5DP {
+public class Demo5_DP {
     public static void main(String[] args) {
         System.out.println(path(3, 7));
     }

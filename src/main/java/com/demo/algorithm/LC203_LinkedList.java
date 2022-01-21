@@ -26,9 +26,9 @@ import java.util.List;
  * @since 2022/1/19 13:52
  */
 
-public class LC203LinkedList {
+public class LC203_LinkedList {
     public static void main(String[] args) {
-        LC203LinkedList lc203 = new LC203LinkedList();
+        LC203_LinkedList lc203 = new LC203_LinkedList();
         ListNode head = new ListNode(1);
         ListNode node1 = new ListNode(2);
         ListNode node2 = new ListNode(6);

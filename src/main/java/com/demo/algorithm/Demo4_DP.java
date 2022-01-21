@@ -38,7 +38,7 @@ package com.demo.algorithm;
  * @since 2022/1/10 11:13
  */
 
-public class Demo4DP {
+public class Demo4_DP {
     public static void main(String[] args) {
         System.out.println(climbStair(7));
     }

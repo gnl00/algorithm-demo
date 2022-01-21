@@ -46,7 +46,7 @@ package com.demo.algorithm;
  * @since 2021/12/28 14:44
  */
 
-public class LC10DP {
+public class LC10_DP {
     public static void main(String[] args) {
 
         String s = "aab";

@@ -18,7 +18,7 @@ package com.demo.algorithm;
  * @since 2022/1/10 14:06
  */
 
-public class Demo6DP {
+public class Demo6_DP {
     public static void main(String[] args) {
         int[][] arr = {
                 {1,3,1},

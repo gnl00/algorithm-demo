@@ -30,9 +30,9 @@ import java.util.List;
  * @since 2022/1/18 14:52
  */
 
-public class LC77BT {
+public class LC77_BT {
     public static void main(String[] args) {
-        LC77BT lc77BT = new LC77BT();
+        LC77_BT lc77BT = new LC77_BT();
         System.out.println(lc77BT.combine(4, 2));
     }
 

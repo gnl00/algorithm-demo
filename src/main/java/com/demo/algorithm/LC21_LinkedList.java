@@ -22,9 +22,9 @@ package com.demo.algorithm;
  * @since 2022/1/20 9:55
  */
 
-public class LC21LinkedList {
+public class LC21_LinkedList {
     public static void main(String[] args) {
-        LC21LinkedList lc21 = new LC21LinkedList();
+        LC21_LinkedList lc21 = new LC21_LinkedList();
 
         ListNode list1 = new ListNode(1);
         ListNode node12 = new ListNode(3);

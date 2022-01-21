@@ -14,7 +14,7 @@ package com.demo.algorithm;
  * @since 2022/1/12 10:51
  */
 
-public class LC42DP {
+public class LC42_DP {
     public static void main(String[] args) {
         int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
         System.out.println(trap2(height));

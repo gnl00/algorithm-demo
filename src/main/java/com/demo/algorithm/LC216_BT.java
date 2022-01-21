@@ -22,9 +22,9 @@ import java.util.List;
  * @since 2022/1/18 15:51
  */
 
-public class LC216BT {
+public class LC216_BT {
     public static void main(String[] args) {
-        LC216BT lc216BT = new LC216BT();
+        LC216_BT lc216BT = new LC216_BT();
         System.out.println(lc216BT.combinationSum3(3, 7));
     }
 

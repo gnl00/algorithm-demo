@@ -23,9 +23,9 @@ package com.demo.algorithm;
  * @since 2022/1/19 10:17
  */
 
-public class LC19LinkedList {
+public class LC19_LinkedList {
     public static void main(String[] args) {
-        LC19LinkedList lc19 = new LC19LinkedList();
+        LC19_LinkedList lc19 = new LC19_LinkedList();
         ListNode head = new ListNode(1);
         ListNode node2 = new ListNode(2);
         ListNode node3 = new ListNode(3);

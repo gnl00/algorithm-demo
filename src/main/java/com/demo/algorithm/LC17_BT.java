@@ -26,9 +26,9 @@ import java.util.List;
  * @since 2022/1/18 13:51
  */
 
-public class LC17BT {
+public class LC17_BT {
     public static void main(String[] args) {
-        LC17BT lc17BT = new LC17BT();
+        LC17_BT lc17BT = new LC17_BT();
         String digits = "22";
         System.out.println(lc17BT.letterCombinations(digits));
     }

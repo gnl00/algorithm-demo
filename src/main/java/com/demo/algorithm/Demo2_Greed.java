@@ -13,7 +13,7 @@ package com.demo.algorithm;
  * @since 2021/12/24 10:33
  */
 
-public class Demo2Greed {
+public class Demo2_Greed {
     public static void main(String[] args) {
         int[] apples = {1, 2, 3, 5, 2};
         int[] days = {3, 2, 1, 4, 2};
