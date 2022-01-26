@@ -24,51 +24,69 @@ package com.demo.algorithm;
 public class LC28_KMP {
     public static void main(String[] args) {
         LC28_KMP lc28 = new LC28_KMP();
-        System.out.println(lc28.strStr2("hello", "ll"));
+        System.out.println(lc28.strStrKMP("hello", "ll"));
     }
 
     /**
      * KMP 算法题解
      * <p> 思想是当出现字符串不匹配时，可以记录一部分之前已经匹配的文本内容，利用这些信息避免从头再去做匹配。
-     * <p> 所以如何记录已经匹配的文本内容，是 KMP 的重点，我们把已经匹配的内容记录在数组 next 中
+     * 所以如何记录已经匹配的文本内容，是 KMP 的重点，我们把已经匹配的内容记录在数组 next 中
      *
-     * <p> 一、什么是前缀表
-     * 前缀表是用来回退的，它记录了模式串与主串(文本串)不匹配的时候，模式串应该从哪里开始重新匹配。
+     * <p> 一、什么是前缀表（prefix table）/匹配表（Partial Match Table）
+     * <p> <strong>前缀表/匹配表是一个数组，是用来回退的，它记录了模式串与主串(文本串)不匹配的时候，模式串应该从哪里开始重新匹配。</strong>
      * 
-     * <p> 以字符串"hello"为例
-     * <p> "hello"的前缀集合: h he hel hell
-     * <p> "hello"的后缀集合: ello llo lo o
+     * <p> 以字符串 abababca 为例：
+     * <p> a 前缀为空，后缀也为空，前后缀的交集 空=0
+     * <p> ab 前缀：a，后缀：b，前后缀交集 空=0
+     * <p> aba 前缀：a ab，后缀：ba a，前后缀交集 a=1
+     * <p> abab 前缀：a ab aba，后缀：bab ab b，前后缀交集 ab=2
+     * <p> ababa 前缀：a ab aba abab，后缀：baba aba ba a，前后缀交集 aba=3
+     * <p> ababab 前缀：a ab aba abab ababa，后缀：babab abab bab ab b，前后缀交集 abab=4
+     * <p> abababc 前缀：a ab aba abab ababa ababab，后缀：bababc ababc babc abc bc c，前后缀交集 空=0
+     * <p> abababca 前缀：a ab aba abab ababa ababab abababc，后缀：bababca ababca babca abca bca ca a，前后缀交集 a=1
      *
-     * next数组就是一个前缀表（prefix table）
+     * <p> 就可以得到下表：
      *
-     * <p> Knuth-Morris-Pratt 算法的核心为前缀函数，记作 π(i)，其定义如下
-     * <p> 对于长度为 m 的字符串 s，其前缀函数 π(i) ( 0 ≤ i  < m ) 表示 s 的子串 s[0:i] 的最长的相等的真前缀与真后缀的长度。
-     * <p> 特别地，如果不存在符合条件的前后缀，那么 π(i) = 0。其中真前缀与真后缀的定义为不等于自身的的前缀与后缀。
+     * <p>  char| a b a b a b c a
+     * <p> index| 0 1 2 3 4 5 6 7
+     * <p> value| 0 0 1 2 3 4 0 1
      *
-     * <p> 举个例子说明：字符串 aabaaab 的前缀函数值依次为 0,1,0,1,2,2,3
+     * <p><strong>next数组就是一个前缀表</strong>
      *
-     * <p> π(0)=0，因为 a 没有真前缀和真后缀，根据规定为 00（可以发现对于任意字符串 \pi(0)=0π(0)=0 必定成立）；
+     * <p> 二、前缀表如何使用
+     * 例如，要在主串 abababca 中查找子串 ababca，next = {0, 0, 1, 2, 3, 4, 0, 1}
+     * 两个字符串从头到尾遍历挨个字符进行匹配，在匹配到子串的 c 时就会发现不匹配了。如果使用的是暴力匹配，此时就需要重新从头开始匹配
      *
-     * <p> π(1)=1，因为 aa 最长的一对相等的真前后缀为 a，长度为 1；
+     *                   i
+     *       a b a b a b a b c a
+     * index 0 1 2 3 4 5 6 7 8 9
+     * next  0 0 1 2 3 4 0 1
+     *       a b a b a b c a
+     *                   j
+     * a != c，开始回退，j 回退的位置就是 j = next[j-1] = 4，i回退到i-1的位置 i = i - 1，再进行匹配
+     *                 i
+     *       a b a b a b a b c a
+     * index 0 1 2 3 4 5 6 7 8 9
+     * next  0 0 1 2 3 4 0 1
+     *           a b a b a b c a
+     *                 j
      *
-     * <p> π(2)=0，因为 aab 没有对应真前缀和真后缀，根据规定为 0；
      *
-     * <p> π(3)=1，因为 aaba 最长的一对相等的真前后缀为 a，长度为 1；
+     * <p> 三、构造next数组
+     * 构造next数组其实就是计算模式串s，前缀表的过程，主要分为以下三步：
+     * 1、初始化
+     * 2、处理前后缀不相同的情况
+     * 3、处理前后缀相同的情况
      *
-     * <p> π(4)=2，因为 aabaa 最长的一对相等的真前后缀为 aa，长度为 2；
      *
-     * <p> π(5)=2，因为 aabaaa 长的一对相等的真前后缀为 aa，长度为 2；
-     *
-     * <p> π(6)=3，因为 aabaaab 最长的一对相等的真前后缀为 aab，长度为 3。
-     *
-     * <p> 有了前缀函数，我们就可以快速地计算出模式串在主串中的每一次出现。
-     *
-     * 如何求解前缀函数
-     * 长度为 m 的字符串 s 的所有前缀函数的求解算法的总时间复杂度是严格 O(m) 的，
-     * 且该求解算法是增量算法，即我们可以一边读入字符串，一边求解当前读入位的前缀函数。
      */
-    public int strStr2(String haystack, String needle) {
+    public int strStrKMP(String haystack, String needle) {
         return -1;
+    }
+
+    public void getNext(int[] next, String s) {
+        int j = -1;
+        next[0] = j;
     }
 
     /**
