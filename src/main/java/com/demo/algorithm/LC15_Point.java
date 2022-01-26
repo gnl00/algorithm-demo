@@ -24,7 +24,7 @@ import java.util.*;
  * @since 2022/1/13 15:40
  */
 
-public class LC15 {
+public class LC15_Point {
     public static void main(String[] args) {
         int[] nums = {-2,0,0,2,2};
         System.out.println(threeSum(nums));

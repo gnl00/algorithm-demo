@@ -31,9 +31,9 @@ import java.util.List;
  * @since 2022/1/18 16:57
  */
 
-public class LC18 {
+public class LC18_Point {
     public static void main(String[] args) {
-        LC18 lc18 = new LC18();
+        LC18_Point lc18 = new LC18_Point();
         // -4 -1 -1 0 1 2
         int [] nums = {0,0,0,1000000000,1000000000,1000000000,1000000000};
         int target = 1000000000;

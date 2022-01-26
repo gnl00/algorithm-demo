@@ -24,7 +24,7 @@ import java.util.Arrays;
  * @since 2022/1/17 17:23
  */
 
-public class LC16 {
+public class LC16_Point {
     public static void main(String[] args) {
         // -1 -1 1 1 3
         int[] nums = {1,1,-1,-1,3};

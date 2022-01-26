@@ -31,4 +31,8 @@ BT（back tracking）：回溯
 DAC（divide and conquer）：分治
 
 PQ（priority queue）：优先队列
+
+Point：双指针
+
+KMP：Knuth-Morris-Pratt 算法
 ```

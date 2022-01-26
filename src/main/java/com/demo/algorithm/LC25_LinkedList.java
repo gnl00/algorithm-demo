@@ -1,5 +1,6 @@
 package com.demo.algorithm;
 
+
 /**
  * K 个一组翻转链表
  *
@@ -50,37 +51,61 @@ public class LC25_LinkedList {
         node4.next = node5;
 
         LC25_LinkedList lc25 = new LC25_LinkedList();
-        System.out.println(lc25.reverseKGroup(node1, 2));
+        System.out.println(lc25.reverseKGroup(node1, 3));
     }
 
     public ListNode reverseKGroup(ListNode head, int k) {
 
+        // 特殊情况直接返回
         if (head == null || head.next == null) {
             return head;
         }
 
         ListNode dummy = new ListNode(0, head);
-        ListNode prev = dummy;
-        ListNode cur = dummy.next;
-        ListNode next = null;
 
-        int len = 0;// 保存链表长
-        while (head != null) {
-            len ++;
-            head = head.next;
-        }
+        ListNode start = dummy;
+        ListNode tail = dummy.next;
 
-        for (int i = 0; i < len / k; i++) {
-            for (int j = 0; j < k - 1; j++) {
-                next = cur.next;
-                cur.next = next.next;
-                next.next = prev.next;
-                prev.next = next;
+        while (tail != null) {
+
+            // 判断子链表是否满足反转条件，即子链表长为k
+            int count = 0;
+            while (count < k && tail != null) {
+                tail = tail.next;
+                count++;
             }
-            prev = cur;
-            cur = prev.next;
+
+            // count 小于 k，tail 为 null，
+            if (count < k) {
+                break;
+            }
+
+            // 保存下一次的头节点
+            ListNode node = start.next;
+            reverse(start, tail);
+            start = node;
+        }
+        return dummy.next;
+    }
+
+    /**
+     * 反转start到tail之间的元素
+     */
+    public void reverse(ListNode start, ListNode tail){
+        if (start == tail || start.next == tail) {
+            return;
         }
 
-        return dummy.next;
+        ListNode head = start.next;
+        ListNode cur = start.next.next;
+        while (cur != tail && cur != null) {
+            ListNode node = cur.next;
+            cur.next = head;
+            head = cur;
+            cur = node;
+        }
+
+        start.next.next = tail;
+        start.next = head;
     }
 }
